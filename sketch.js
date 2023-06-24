@@ -9,6 +9,7 @@ var world;
 var particles = [];
 var pegs = [];
 var bounds = [];
+var walls = [];
 var cols = 13;
 var rows = 11;
 
@@ -69,6 +70,11 @@ function setup() {
     var b = new Boundary(width/2, height+50, width, 100)
     bounds.push(b);
 
+    var w = new Wall(40, 460, 7, 900)
+    walls.push(w)
+    var w2 = new Wall(width-30, 460, 7, 900)
+    walls.push(w2)
+
     for (var j=1; j < cols-1; j++) {
         var x = j*spacing;
         var h = 66;
@@ -84,7 +90,7 @@ function setup() {
 
 
 function newParticle() {
-    var p = new Particle(300,50, 20);
+    var p = new Particle(300,50, 21);
     particles.push(p);
 }
 
@@ -112,6 +118,9 @@ function draw() {
     }
     for (var i = 0; i < bounds.length; i++) {
         bounds[i].show();
+    }
+    for (var i = 0; i < walls.length; i++) {
+        walls[i].show();
     }
 
 }
