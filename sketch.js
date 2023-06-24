@@ -1,20 +1,50 @@
 // module aliases
 var Engine = Matter.Engine,
     World = Matter.World,
+    Events = Matter.Events;
     Bodies = Matter.Bodies;
 
 var engine;
 var world;
 var particles = [];
 var pegs = [];
-var cols = 11; 
-var rows = 13;
+var bounds = [];
+var cols = 13;
+var rows = 11;
+
+function preload() {
+    ding = loadSound('/sounds/ding.mp3');
+    beep = loadSound('/sounds/beep.mp3');
+}
+
+
+
+
 
 function setup() {
-    createCanvas(600,800)
+    createCanvas(700,900)
 
     engine = Engine.create();
     world = engine.world;
+    world.gravity.y=1.75;
+
+    function collision(event) {
+        var pairs = event.pairs;
+
+        for (let i = 0; i < pairs.length; i++) {
+            var labelA = pairs[i].bodyA.label;
+            var labelB = pairs[i].bodyB.label;
+
+            if(labelA =='plinko' && labelB == 'peg' || labelA =='peg' && labelB == 'plinko') {
+                //beep.play();
+            }
+            
+        }
+        //console.log(event)
+    }
+
+    Events.on(engine, 'collisionStart', collision); 
+
     newParticle();
     var spacing = width/cols;
 
@@ -23,19 +53,38 @@ function setup() {
 
             var x = spacing/2 + i*spacing;
             if (j%2 == 0) {
-                x+= spacing/2;
+                x+=spacing/2;
             }
             var y = spacing + j*spacing;
-            var p = new Peg(x, y, 4);
-            pegs.push(p);
+            var p = new Peg(x+35, y+50, 2.73);
+
+            if (i==0 && j% 2 != 0) {
+                continue;
+            }
+            else{
+                pegs.push(p);
+            }
         }
     }
-    console.log(pegs);
+    var b = new Boundary(width/2, height+50, width, 100)
+    bounds.push(b);
 
+    for (var j=1; j < cols-1; j++) {
+        var x = j*spacing;
+        var h = 66;
+        var w = 7;
+        var y = height -h/2;
+        var b = new Boundary(x+35,y,w,h);
+        bounds.push(b);
+
+
+    }
 }
 
+
+
 function newParticle() {
-    var p = new Particle(300,50, 15);
+    var p = new Particle(300,50, 20);
     particles.push(p);
 }
 
@@ -43,17 +92,26 @@ function newParticle() {
 function draw() {
 
 
-    if (frameCount % 30 == 0) {
+    if (frameCount % 90 == 0) {
         newParticle();
     }
 
-    background(51);
+    background(0);
     Engine.update(engine);
     for (var i = 0; i < particles.length; i++) {
         particles[i].show();
+
+        if (particles[i].isOffScreen()) {
+            World.remove(world, particles[i].body);
+            particles.splice(i,1);
+            i--;
+        }
     }
     for (var i = 0; i < pegs.length; i++) {
         pegs[i].show();
+    }
+    for (var i = 0; i < bounds.length; i++) {
+        bounds[i].show();
     }
 
 }

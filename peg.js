@@ -1,17 +1,18 @@
 function Peg(x,y,r) {
 
     var options = {
-        isStatic: true
+        isStatic: true,
     }
 
     this.body = Bodies.circle(x,y,r, options);
+    this.body.label = "peg";
     this.r = r;
     World.add(world, this.body);
 
 }
 
 Peg.prototype.show = function() {
-    fill(0,255,0);
+    fill(96);
     stroke(255);
     var pos = this.body.position;
     push();

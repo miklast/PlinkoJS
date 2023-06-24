@@ -1,13 +1,20 @@
 function Particle(x,y,r) {
 
     var options = {
-        restitution: .5
+        restitution: .35
     }
 
     this.body = Bodies.circle(x,y,r, options);
+    this.body.label = "plinko";
     this.r = r;
     World.add(world, this.body);
 
+}
+
+Particle.prototype.isOffScreen = function() {
+    var x = this.body.position.x;
+    var y = this.body.position.y;
+   return (x< 80 || x > width-300 || y > height-20);
 }
 
 Particle.prototype.show = function() {
