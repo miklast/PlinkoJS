@@ -17,13 +17,6 @@ var rows = 8;
 
 var mConstraint;
 
-function preload() {
-    ding = loadSound('/sounds/ding.mp3');
-    beep = loadSound('/sounds/beep.mp3');
-}
-
-
-
 
 
 function setup() {
