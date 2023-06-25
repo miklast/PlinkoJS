@@ -92,6 +92,7 @@ function setup() {
     }
 
     mConstraint = MouseConstraint.create(engine, options);
+    mConstraint.collisionFilter.mask = 0x0002;
     World.add(world, mConstraint);
     console.log(mConstraint);
 
@@ -100,7 +101,8 @@ function setup() {
 
 
 function newParticle(x,y,r) {
-    var p = new Particle(x,50,r);
+    var p = new Particle(x,-10,r);
+
     particles.push(p);
 }
 

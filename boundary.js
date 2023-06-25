@@ -26,7 +26,7 @@ function Wall(x,y,w,h) {
 
     var options = {
         isStatic: true,
-        restitution: .65
+        restitution: .65,
     }
 
     this.body = Bodies.rectangle(x,y,w,h, options);
