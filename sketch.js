@@ -113,9 +113,11 @@ function newParticle(x,y,r) {
 
 function draw() {
 
-    console.log(mConstraint.mouse)
+    
     if (mConstraint.mouse.button == 0) {
-        newParticle(mConstraint.mouse.position.x, mConstraint.mouse.position.y, 21);
+        if (particles.length < 1) {
+            newParticle(mConstraint.mouse.position.x, mConstraint.mouse.position.y, 21);
+        }
     }
 
     // if (frameCount % 90 == 0) {
