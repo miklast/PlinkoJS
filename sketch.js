@@ -33,9 +33,9 @@ function setup() {
             var labelA = pairs[i].bodyA.label;
             var labelB = pairs[i].bodyB.label;
 
-            if(labelA =='plinko' && labelB == 'peg' || labelA =='peg' && labelB == 'plinko') {
-                //beep.play();
-            }
+            // if(labelA =='plinko' && labelB == 'peg' || labelA =='peg' && labelB == 'plinko') {
+
+            // }
             
         }
         //console.log(event)
