@@ -100,7 +100,7 @@ function setup() {
 
 
 function newParticle(x,y,r) {
-    var p = new Particle(x,y,r);
+    var p = new Particle(x,50,r);
     particles.push(p);
 }
 
@@ -108,6 +108,7 @@ function newParticle(x,y,r) {
 function draw() {
 
     
+    //console.log(mConstraint.mouse.position)
     if (mConstraint.mouse.button == 0) {
         if (particles.length < 1) {
             newParticle(mConstraint.mouse.position.x, mConstraint.mouse.position.y, 19.25);
