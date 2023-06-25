@@ -25,7 +25,8 @@ Boundary.prototype.show = function() {
 function Wall(x,y,w,h) {
 
     var options = {
-        isStatic: true
+        isStatic: true,
+        restitution: .65
     }
 
     this.body = Bodies.rectangle(x,y,w,h, options);

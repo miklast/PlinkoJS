@@ -1,7 +1,7 @@
 function Particle(x,y,r) {
 
     var options = {
-        restitution: .35
+        restitution: .66
     }
 
     this.body = Bodies.circle(x,y,r, options);
@@ -14,7 +14,7 @@ function Particle(x,y,r) {
 Particle.prototype.isOffScreen = function() {
     var x = this.body.position.x;
     var y = this.body.position.y;
-   return (x< 50 || x > width-300 || y > height-20);
+   return (x< 50 || x > width-40 || y > height-20);
 }
 
 Particle.prototype.show = function() {

@@ -3,6 +3,8 @@ var Engine = Matter.Engine,
     World = Matter.World,
     Events = Matter.Events;
     Bodies = Matter.Bodies;
+    MouseConstraint = Matter.MouseConstraint,
+    Mouse = Matter.Mouse
 
 var engine;
 var world;
@@ -12,6 +14,8 @@ var bounds = [];
 var walls = [];
 var cols = 13;
 var rows = 11;
+
+var mConstraint;
 
 function preload() {
     ding = loadSound('/sounds/ding.mp3');
@@ -23,7 +27,7 @@ function preload() {
 
 
 function setup() {
-    createCanvas(700,900)
+    canvas = createCanvas(700,900)
 
     engine = Engine.create();
     world = engine.world;
@@ -46,7 +50,7 @@ function setup() {
 
     Events.on(engine, 'collisionStart', collision); 
 
-    newParticle();
+    //newParticle();
     var spacing = width/cols;
 
     for (var i=0; i <  rows; i++) {
@@ -72,7 +76,7 @@ function setup() {
 
     var w = new Wall(40, 460, 7, 900)
     walls.push(w)
-    var w2 = new Wall(width-30, 460, 7, 900)
+    var w2 = new Wall(width-26, 460, 7, 900)
     walls.push(w2)
 
     for (var j=1; j < cols-1; j++) {
@@ -85,22 +89,38 @@ function setup() {
 
 
     }
+
+    var canvasMouse = Mouse.create(canvas.elt);
+    canvasMouse.pixelRatio = pixelDensity();
+
+    var options = {
+        mouse: canvasMouse
+    }
+
+    mConstraint = MouseConstraint.create(engine, options);
+    World.add(world, mConstraint);
+    console.log(mConstraint);
+
 }
 
 
 
-function newParticle() {
-    var p = new Particle(300,50, 21);
+function newParticle(x,y,r) {
+    var p = new Particle(x,y,r);
     particles.push(p);
 }
 
 
 function draw() {
 
-
-    if (frameCount % 90 == 0) {
-        newParticle();
+    console.log(mConstraint.mouse)
+    if (mConstraint.mouse.button == 0) {
+        newParticle(mConstraint.mouse.position.x, mConstraint.mouse.position.y, 21);
     }
+
+    // if (frameCount % 90 == 0) {
+    //     newParticle();
+    // }
 
     background(0);
     Engine.update(engine);
