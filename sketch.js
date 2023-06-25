@@ -12,8 +12,8 @@ var particles = [];
 var pegs = [];
 var bounds = [];
 var walls = [];
-var cols = 13;
-var rows = 11;
+var cols = 10;
+var rows = 8;
 
 var mConstraint;
 
@@ -27,7 +27,7 @@ function preload() {
 
 
 function setup() {
-    canvas = createCanvas(700,900)
+    canvas = createCanvas(600,800)
 
     engine = Engine.create();
     world = engine.world;
@@ -94,7 +94,8 @@ function setup() {
     canvasMouse.pixelRatio = pixelDensity();
 
     var options = {
-        mouse: canvasMouse
+        mouse: canvasMouse,
+        collisionFilter: {mask: 0b1}
     }
 
     mConstraint = MouseConstraint.create(engine, options);
@@ -116,7 +117,10 @@ function draw() {
     
     if (mConstraint.mouse.button == 0) {
         if (particles.length < 1) {
-            newParticle(mConstraint.mouse.position.x, mConstraint.mouse.position.y, 21);
+            newParticle(mConstraint.mouse.position.x, mConstraint.mouse.position.y, 19.25);
+        }
+        if (mConstraint.mouse.button == -1) {
+            particle.category = 0b10;
         }
     }
 
